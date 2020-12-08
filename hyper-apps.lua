@@ -7,5 +7,6 @@ return {
   {"b", "Google Chrome"}, -- "B" for "Browser"
   {"f", "Finder"}, -- "F" for "Finder"
   {"g", "Mailplane"}, -- "G" for "Gmail"
-  {"t", "iTerm"} -- "T" for "Terminal"
+  {"i", "iTerm"},
+  {"t", "Alacritty"} -- "T" for "Terminal"
 }
