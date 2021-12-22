@@ -1,12 +1,13 @@
+-- local hs = hs
 local message = require("status-message")
 
-local messageMuting = message.new("muted 🎤")
-local messageHot = message.new("hot 🎤")
+local messageMuting = message.new("Microphone is muted 🎤")
+local messageHot = message.new("Microphone is hot 🎤")
 local lastMods = {}
 local recentlyClicked = false
 local secondClick = false
 
-displayStatus = function()
+local displayStatus = function()
   -- Check if the active mic is muted
   if hs.audiodevice.defaultInputDevice():muted() then
     messageMuting:notify()
@@ -14,9 +15,9 @@ displayStatus = function()
     messageHot:notify()
   end
 end
-displayStatus()
+-- displayStatus()
 
-toggle = function(device)
+local toggle = function(device)
   if device:muted() then
     device:setMuted(false)
   else
@@ -24,13 +25,13 @@ toggle = function(device)
   end
 end
 
-fnKeyHandler = function()
+local fnKeyHandler = function()
   recentlyClicked = false
 end
 
-controlKeyTimer = hs.timer.delayed.new(0.3, fnKeyHandler)
+local controlKeyTimer = hs.timer.delayed.new(0.3, fnKeyHandler)
 
-fnHandler = function(event)
+local fnHandler = function(event)
   local device = hs.audiodevice.defaultInputDevice()
   local newMods = event:getFlags()
 

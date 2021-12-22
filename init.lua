@@ -9,12 +9,32 @@ hs.hotkey.bind(
     hs.reload()
   end
 )
+local config_path = os.getenv("HOME") .. "/.hammerspoon/"
+local function reloadConfig(files)
+  local doReload = false
+  for _, file in pairs(files) do
+    if file:sub(-4) == ".lua" then
+      doReload = true
+    end
+  end
+  if doReload then
+    hs.reload()
+  end
+end
 
-keyUpDown = function(modifiers, key)
+MyWatcher = hs.pathwatcher.new(config_path, reloadConfig):start()
+hs.alert.show("Hammerspoon Config loaded")
+
+---@param modifiers table "'ctrl', 'fn', 'alt', 'cmd', 'shift'"
+---@param key string
+---@param delay? number time in ms
+KeyUpDown = function(modifiers, key, delay)
+  delay = delay or 0
+
   -- Un-comment & reload config to log each keystroke that we're triggering
-  -- log.d("Sending keystroke:", hs.inspect(modifiers), key)
+  log.d("Sending keystroke:", hs.inspect(modifiers), key)
 
-  hs.eventtap.keyStroke(modifiers, key, 0)
+  hs.eventtap.keyStroke(modifiers, key, delay)
 end
 
 -- Subscribe to the necessary events on the given window filter such that the
@@ -42,14 +62,34 @@ enableHotkeyForWindowsMatchingFilter = function(windowFilter, hotkey)
   )
 end
 
--- require("control-escape")
--- require("delete-words")
+Sigils = require("WindowSigils")
+
+---Focus the window with x sigil
+---@param window hs.window()
+local focus_window = function(window)
+  window:focus()
+  -- Sigils:refresh()
+end
+
+Sigils:configure(
+  {
+    hotkeys = {
+      enter = {{"control"}, "W"}
+    },
+    sigil_actions = {
+      [{}] = focus_window
+      --     [{"ctrl"}] = swap_window,
+      --     [{"alt"}] = warp_window
+    }
+  }
+)
+Sigils:start()
+
 require("hyper")
--- require("markdown")
 require("microphone")
--- require('keyboard.panes')
 require("windows")
-require("caffeine")
+-- require("caffeine")
+-- require("markdown")
 
 -- https://www.hammerspoon.org/docs/hs.console.html#darkMode
 hs.console.darkMode(true)

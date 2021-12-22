@@ -1,6 +1,6 @@
-hyperModeAppMappings = require("hyper-apps")
+local hyperModeAppMappings = require("hyper-apps")
 
-for i, mapping in ipairs(hyperModeAppMappings) do
+for _, mapping in ipairs(hyperModeAppMappings) do
   local key = mapping[1]
   local app = mapping[2]
   hs.hotkey.bind(

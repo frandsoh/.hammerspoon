@@ -1,7 +1,7 @@
--- local drawing = require("hs.drawing")
--- local geometry = require 'hs.geometry'
--- local screen = require 'hs.screen'
--- local styledtext = require 'hs.styledtext'
+-- local drawing = hs.drawing
+-- local geometry = hs.geometry
+-- local screen = require "hs.screen"
+-- local styledtext = require "hs.styledtext"
 
 local statusmessage = {}
 statusmessage.new = function(messageText)
@@ -59,7 +59,7 @@ statusmessage.new = function(messageText)
       end
     end,
     notify = function(self, seconds)
-      local seconds = seconds or 1
+      seconds = seconds or 1
       self:show()
       hs.timer.delayed.new(
         seconds,
